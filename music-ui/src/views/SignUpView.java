@@ -34,7 +34,7 @@ public class SignUpView extends javax.swing.JFrame implements Window {
         jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Lance of Destiny");
+        setTitle("306 Music");
         setPreferredSize(new java.awt.Dimension(800, 500));
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
@@ -43,11 +43,11 @@ public class SignUpView extends javax.swing.JFrame implements Window {
 
         jPanel2.setBackground(new java.awt.Color(0, 102, 102));
 
-        jLabel1.setIcon(new javax.swing.ImageIcon("/Users/emretaskend/Documents/GitHub/4thDimension-comp302/LanceOfDestiny-FourthDimension/src/main/java/org/LanceOfDestiny/Resources/Image/Screenshot 2024-04-13 at 15.41.59.png"));
+        //jLabel1.setIcon(new javax.swing.ImageIcon("/Users/emretaskend/Documents/GitHub/4thDimension-comp302/LanceOfDestiny-FourthDimension/src/main/java/org/LanceOfDestiny/Resources/Image/Screenshot 2024-04-13 at 15.41.59.png"));
 
         jLabel2.setFont(new java.awt.Font("Showcard Gothic", 0, 24)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel2.setText("Lance of Destiny");
+        jLabel2.setText("306 Music");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
