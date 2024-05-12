@@ -1,5 +1,6 @@
 package views;
 
+import Managers.DatabaseController;
 import com.raven.model.Model_Menu;
 import com.raven.swing.ScrollBar;
 import com.raven.model.Model_Menu;
@@ -14,7 +15,6 @@ import java.awt.*;
 
 public class MainView extends JFrame implements Window{
     public MainView() {
-
     }
 
     @Override

@@ -1,5 +1,7 @@
 package views;
 
+import Managers.DatabaseController;
+
 import javax.swing.*;
 
 import java.awt.*;
@@ -12,28 +14,17 @@ public class PlaylistsView extends JFrame implements Window {
 
     private List<String> playlistNames; // Your list of playlist names
     private JPanel playlistPanel;
+
     public void createAndShowUI() {
         // Initialize the playlist names (replace this with your actual list of playlist names)
         playlistNames = new ArrayList<>();
         playlistNames.add("Playlist 1");
         playlistNames.add("Playlist 2");
         playlistNames.add("Playlist 3");
-        playlistNames.add("Playlist 4");
-        playlistNames.add("Playlist 5");
-        playlistNames.add("Playlist 6");
-        playlistNames.add("Playlist 7");
-        playlistNames.add("Playlist 8");
-        playlistNames.add("Playlist 9");
-        playlistNames.add("Playlist 10");
-        playlistNames.add("Playlist 11");
-        playlistNames.add("Playlist 12");
-        playlistNames.add("Playlist 13");
-        playlistNames.add("Playlist 14");
-        playlistNames.add("Playlist 15");
 
         // Create and configure the JFrame
         setTitle("My Playlists");
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setSize(400, 300); // Set initial window size
         setResizable(false); // Make the frame not resizable
         setLocationRelativeTo(null); // Center the frame on the screen
@@ -56,30 +47,38 @@ public class PlaylistsView extends JFrame implements Window {
         playlistPanel.setBackground(new Color(241, 241, 241)); // Light gray background
 
         for (String playlist : playlistNames) {
-            JButton playlistButton = new JButton(playlist);
-            playlistButton.setBackground(new Color(46, 204, 113)); // Green button color
-            playlistButton.setForeground(Color.BLACK); // White text color
-            playlistButton.setFocusPainted(false); // Remove focus border
-            playlistButton.setBorderPainted(false); // Remove border
-            playlistButton.setAlignmentX(Component.CENTER_ALIGNMENT); // Center horizontally
-            playlistButton.setMaximumSize(new Dimension(Short.MAX_VALUE, 40)); // Full width, fixed height
-            playlistButton.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    WindowManager.getInstance().showWindow(Windows.MusicsPl);
-                    JOptionPane.showMessageDialog(null, "Clicked playlist: " + playlist);
-                }
-            });
-            playlistPanel.add(playlistButton);
+            createPlaylistButton(playlist); // Create playlist buttons
         }
 
         // Create a scroll pane for the playlist panel
         JScrollPane scrollPane = new JScrollPane(playlistPanel);
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS); // Always show vertical scroll bar
 
-        // Add the panels to the frame
+        // Create a button to add new playlist
+        JButton addButton = new JButton("Create New Playlist");
+        addButton.setBackground(Color.GREEN); // Set background color to green
+        addButton.setForeground(Color.GREEN); // White text color
+        addButton.setFocusPainted(false); // Remove focus border
+        addButton.setBorderPainted(false); // Remove border
+        addButton.setAlignmentX(Component.CENTER_ALIGNMENT); // Center horizontally
+        addButton.setMaximumSize(new Dimension(Short.MAX_VALUE, 40)); // Full width, fixed height
+        addButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Perform action when new playlist button is clicked
+                String newPlaylistName = JOptionPane.showInputDialog(null, "Enter new playlist name:");
+                if (newPlaylistName != null && !newPlaylistName.isEmpty()) {
+                    createPlaylistButton(newPlaylistName);
+                    playlistNames.add(newPlaylistName);
+                    // Perform any additional actions like adding to database, etc.
+                }
+            }
+        });
+
+        // Add the panels and button to the frame
         add(topPanel, BorderLayout.NORTH);
         add(scrollPane, BorderLayout.CENTER); // Use a scroll pane for playlist panel
+        add(addButton, BorderLayout.SOUTH); // Add the new playlist button at the bottom
 
         // Add action listener to the search button
         searchButton.addActionListener(new ActionListener() {
@@ -90,9 +89,26 @@ public class PlaylistsView extends JFrame implements Window {
                 JOptionPane.showMessageDialog(null, "Search for: " + searchText);
             }
         });
+
         this.setVisible(true);
     }
 
-
+    private void createPlaylistButton(String playlistName) {
+        JButton playlistButton = new JButton(playlistName);
+        playlistButton.setBackground(new Color(46, 204, 113)); // Green button color
+        playlistButton.setForeground(Color.BLACK); // White text color
+        playlistButton.setFocusPainted(false); // Remove focus border
+        playlistButton.setBorderPainted(false); // Remove border
+        playlistButton.setAlignmentX(Component.CENTER_ALIGNMENT); // Center horizontally
+        playlistButton.setMaximumSize(new Dimension(Short.MAX_VALUE, 40)); // Full width, fixed height
+        playlistButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                DatabaseController.setChoosedPlaylist(playlistName);
+                System.out.println(DatabaseController.getChoosedPlaylist());
+                WindowManager.getInstance().showWindow(Windows.MusicsPl);
+            }
+        });
+        playlistPanel.add(playlistButton);
+    }
 }
-

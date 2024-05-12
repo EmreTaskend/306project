@@ -15,7 +15,7 @@ import javax.swing.SwingUtilities;
 
 public class ListMusic<E extends Object> extends JList<E> {
 
-    private final DefaultListModel model;
+    public final DefaultListModel model;
     private int playIndex = -1;
 
     public ListMusic() {
@@ -52,6 +52,7 @@ public class ListMusic<E extends Object> extends JList<E> {
     }
 
     public void addItem(Model_Music data) {
+        System.out.println(data.getName());
         model.addElement(data);
     }
 }

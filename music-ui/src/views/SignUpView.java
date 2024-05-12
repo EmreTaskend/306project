@@ -17,7 +17,6 @@ public class SignUpView extends javax.swing.JFrame implements Window {
 
     @SuppressWarnings("unchecked")
     public void createAndShowUI() {
-
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -32,7 +31,6 @@ public class SignUpView extends javax.swing.JFrame implements Window {
         jLabel8 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
-
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("306 Music");
         setPreferredSize(new java.awt.Dimension(800, 500));
@@ -185,7 +183,6 @@ public class SignUpView extends javax.swing.JFrame implements Window {
     }
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {
-        wm.showWindow(Windows.LogIn);
         this.dispose();
     }
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {
@@ -201,6 +198,14 @@ public class SignUpView extends javax.swing.JFrame implements Window {
             ex.printStackTrace();
             JOptionPane.showMessageDialog(SignUpView.this, "Error occurred. Please try again later.");
         }
+    }
+    private void resetUI() {
+        // Clear input fields
+        jTextField1.setText("");
+        jPasswordField1.setText("");
+
+        // Clear any displayed messages or states
+        // For example, you might reset labels or hide/show components as needed
     }
 
     private javax.swing.JButton jButton1;

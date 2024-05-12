@@ -1,5 +1,6 @@
 package com.raven.form;
 
+import Managers.DatabaseController;
 import com.raven.model.Model_Popular;
 import javax.swing.ImageIcon;
 
@@ -24,7 +25,7 @@ public class Form_Artists extends javax.swing.JPanel {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         mostPopular = new com.raven.component.MostPopular();
-        music1 = new com.raven.component.Music();
+        music1 = new com.raven.component.Music(DatabaseController.getInstance().fetchTrendings(),"Trending");
         profile1 = new com.raven.component.Profile();
 
         setBackground(new java.awt.Color(255, 255, 255));
