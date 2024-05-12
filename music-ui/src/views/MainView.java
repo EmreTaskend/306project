@@ -42,9 +42,7 @@ public class MainView extends JFrame implements Window{
         list2.addItem(new Model_Menu("Browse", "browse"));
         panel1 = new com.raven.swing.Panel();
         menu1 = new com.raven.component.Menu();
-        list1 = new com.raven.component.ListMenu<>();
         jLabel1 = new javax.swing.JLabel();
-        list2 = new com.raven.component.ListMenu<>();
         jLabel2 = new javax.swing.JLabel();
         panelMoving = new javax.swing.JPanel();
         sp = new javax.swing.JScrollPane();

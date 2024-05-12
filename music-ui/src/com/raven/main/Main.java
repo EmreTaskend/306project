@@ -10,7 +10,7 @@ import java.awt.Color;
 public class Main  {
     static WindowManager wm = WindowManager.getInstance();
     public static void main(String args[]) {
-        wm.showWindow(Windows.LogIn);
+        wm.showWindow(Windows.MainView);
     }
 
 }

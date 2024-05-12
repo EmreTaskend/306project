@@ -1,6 +1,9 @@
 package com.raven.component;
 
 import com.raven.model.Model_Menu;
+import views.WindowManager;
+import views.Windows;
+
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -21,6 +24,7 @@ public class ItemMenu extends javax.swing.JPanel {
             lbText.setFont(new java.awt.Font("sansserif", 1, 14));
             lbText.setForeground(Color.WHITE);
             lbIcon.setIcon(data.toIconSelected());
+            WindowManager.getInstance().showWindow(Windows.Playlists);
         } else {
             lbText.setFont(new java.awt.Font("sansserif", 0, 14));
             lbText.setForeground(new Color(204, 204, 204));

@@ -1,6 +1,9 @@
 package com.raven.component;
 
 import com.raven.model.Model_Music;
+import views.WindowManager;
+import views.Windows;
+
 import java.awt.Component;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
