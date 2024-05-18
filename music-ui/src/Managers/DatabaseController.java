@@ -46,12 +46,12 @@ public class DatabaseController {
             return resultSet.next();
         }
     }
-    public ArrayList<Song> fetchPlaylist() {
+    public ArrayList<Song> fetchPlaylistSongs() {
         ArrayList<Song> trendingSongs = new ArrayList<>();
         try (PreparedStatement pstmt = connection.prepareStatement("""
             SELECT * 
-            FROM Playlist P, Song S
-            WHERE P.owner = ? AND S.name = P.songname AND P.albumname = ? 
+            FROM PlaylistSongs P, Song S
+            WHERE P.owner = ? AND S.name = P.songname AND P.plname = ? 
             """)) {
             pstmt.setString(1, DatabaseController.username);
             pstmt.setString(2, DatabaseController.choosedPlaylist);
@@ -95,6 +95,37 @@ public class DatabaseController {
             throw new RuntimeException(e);
         }
         return trendingSongs;
+    }
+    public ArrayList<String> fetchUserPlaylists() {
+        ArrayList<String> playlists = new ArrayList<>();
+        try (PreparedStatement pstmt = connection.prepareStatement("""
+            SELECT albumname 
+            FROM Playlist P
+            WHERE P.owner = ? 
+            """)) {
+            pstmt.setString(1, DatabaseController.username);
+            ResultSet resultSet = pstmt.executeQuery();
+
+            while (resultSet.next()) {
+                String plname = resultSet.getString("albumname");
+                playlists.add(plname);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return playlists;
+    }
+    public void createPlaylist(String plName) {
+        ArrayList<String> playlists = new ArrayList<>();
+        try (PreparedStatement pstmt = connection.prepareStatement("""
+            INSERT INTO Playlist (owner, albumname) VALUES (?, ?) 
+            """)) {
+            pstmt.setString(1, DatabaseController.username);
+            pstmt.setString(2, plName);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public static String getChoosedPlaylist() {

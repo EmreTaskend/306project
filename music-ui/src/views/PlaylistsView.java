@@ -21,9 +21,7 @@ public class PlaylistsView extends JFrame implements Window {
     public void createAndShowUI() {
         // Initialize the playlist names (replace this with your actual list of playlist names)
         playlistNames = new ArrayList<>();
-        playlistNames.add("Playlist 1");
-        playlistNames.add("Playlist 1");
-        playlistNames.add("Playlist 1");
+        playlistNames.addAll(DatabaseController.getInstance().fetchUserPlaylists());
         MenuListsController.getInstance().list1.clearSelection();
 
         // Create and configure the JFrame
@@ -105,7 +103,9 @@ public class PlaylistsView extends JFrame implements Window {
                 if (newPlaylistName != null && !newPlaylistName.isEmpty()) {
                     createPlaylistButton(newPlaylistName);
                     playlistNames.add(newPlaylistName);
-                    // Perform any additional actions like adding to database, etc.
+                    DatabaseController.getInstance().createPlaylist(newPlaylistName);
+                    dispose();
+                    createAndShowUI();
                 }
             }
         });

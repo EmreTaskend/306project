@@ -5,7 +5,6 @@ import com.raven.component.Music;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.Objects;
 
 public class MusicsPl extends JFrame implements Window {
     public Music m;
@@ -15,7 +14,7 @@ public class MusicsPl extends JFrame implements Window {
         if(m != null){
             resetUI();
         }
-        m = new Music(DatabaseController.getInstance().fetchPlaylist(), DatabaseController.getChoosedPlaylist());
+        m = new Music(DatabaseController.getInstance().fetchPlaylistSongs(), DatabaseController.getChoosedPlaylist());
         setSize(600, 400); // Set initial window size
         setResizable(false); // Make the frame not resizable
         setLocationRelativeTo(null); // Center the frame on the screen
@@ -38,7 +37,7 @@ public class MusicsPl extends JFrame implements Window {
         getContentPane().remove(m);
 
         // Fetch updated playlist data and create a new Music component
-        m = new Music(DatabaseController.getInstance().fetchPlaylist(), DatabaseController.getChoosedPlaylist());
+        m = new Music(DatabaseController.getInstance().fetchPlaylistSongs(), DatabaseController.getChoosedPlaylist());
 
         // Update the frame's content with the new Music component
         getContentPane().add(m, BorderLayout.CENTER);
