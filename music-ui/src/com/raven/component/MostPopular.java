@@ -1,6 +1,11 @@
 package com.raven.component;
 
 import com.raven.model.Model_Popular;
+import views.WindowManager;
+import views.Windows;
+
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class MostPopular extends javax.swing.JLayeredPane {
 
@@ -47,6 +52,12 @@ public class MostPopular extends javax.swing.JLayeredPane {
     public void addImage(Model_Popular data) {
         ItemImage item = new ItemImage();
         item.setData(data);
+        item.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                WindowManager.getInstance().showWindow(Windows.ArtistView);
+            }
+        });
         panel.add(item);
         panel.repaint();
         panel.revalidate();

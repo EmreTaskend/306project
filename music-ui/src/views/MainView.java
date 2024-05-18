@@ -1,17 +1,9 @@
 package views;
 
-import Managers.DatabaseController;
-import com.raven.model.Model_Menu;
+import Managers.MenuListsController;
 import com.raven.swing.ScrollBar;
-import com.raven.model.Model_Menu;
-import com.raven.swing.ScrollBar;
-import views.WindowManager;
-import views.Windows;
-
-import java.awt.Color;
 
 import javax.swing.*;
-import java.awt.*;
 
 public class MainView extends JFrame implements Window{
     public MainView() {
@@ -23,23 +15,13 @@ public class MainView extends JFrame implements Window{
         com.raven.form.Form_Artists form_Artists1;
         javax.swing.JLabel jLabel1;
         javax.swing.JLabel jLabel2;
-        com.raven.component.ListMenu<String> list1 = new com.raven.component.ListMenu<>();
-        com.raven.component.ListMenu<String> list2 = new com.raven.component.ListMenu<>();
+        com.raven.component.ListMenu<String> list1 = MenuListsController.getInstance().list1;
+        com.raven.component.ListMenu<String> list2 = MenuListsController.getInstance().list2;
         com.raven.component.Menu menu1;
         com.raven.swing.Panel panel1;
         javax.swing.JPanel panelMoving;
         javax.swing.JScrollPane sp = new javax.swing.JScrollPane();
         sp.setVerticalScrollBar(new ScrollBar());
-
-        list1.addItem(new Model_Menu("Playlist", "playlist"));
-        list1.addItem(new Model_Menu("Artists", "artists"));
-        list1.addItem(new Model_Menu("Albums", "albums"));
-        list1.addItem(new Model_Menu("Songs", "song"));
-
-        list2.addItem(new Model_Menu("Store", "store"));
-        list2.addItem(new Model_Menu("Radio", "radio"));
-        list2.addItem(new Model_Menu("For You", "love"));
-        list2.addItem(new Model_Menu("Browse", "browse"));
         panel1 = new com.raven.swing.Panel();
         menu1 = new com.raven.component.Menu();
         jLabel1 = new javax.swing.JLabel();
@@ -49,7 +31,7 @@ public class MainView extends JFrame implements Window{
         form_Artists1 = new com.raven.form.Form_Artists();
         bottom1 = new com.raven.component.Bottom();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setUndecorated(true);
 
         panel1.setBackground(new java.awt.Color(255, 255, 255));

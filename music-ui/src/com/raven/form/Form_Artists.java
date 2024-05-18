@@ -12,9 +12,9 @@ public class Form_Artists extends javax.swing.JPanel {
     }
 
     private void init() {
-        mostPopular.addImage(new Model_Popular(new ImageIcon(getClass().getResource("/com/raven/icon/test/avicii.png")), "Avicii True Stories", "15 Albums | 17.5M Follower"));
+        mostPopular.addImage(new Model_Popular(new ImageIcon(getClass().getResource("/com/raven/icon/test/_121539315_taylorred976.jpg")), "Avicii True Stories", "15 Albums | 17.5M Follower"));
         mostPopular.addImage(new Model_Popular(new ImageIcon(getClass().getResource("/com/raven/icon/test/kygo.png")), "Kygo and Alan Walker", "15 Albums | 17.5M Mollowers"));
-        mostPopular.addImage(new Model_Popular(new ImageIcon(getClass().getResource("/com/raven/icon/test/ed-sheeran.jpg")), "Ed Sheeran", "15 Albums | 17.5M Mollowers"));
+        mostPopular.addImage(new Model_Popular(new ImageIcon(getClass().getResource("/com/raven/icon/test/Apple-Music-Live-Ed-Sheeran-with-guitar_big.jpg.large.jpg")), "Ed Sheeran", "15 Albums | 17.5M Mollowers"));
         mostPopular.addImage(new Model_Popular(new ImageIcon(getClass().getResource("/com/raven/icon/test/sigala.jpg")), "Sigala", "15 Albums | 17.5M Mollowers"));
     }
 
