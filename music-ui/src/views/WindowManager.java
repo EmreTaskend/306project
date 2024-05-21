@@ -1,5 +1,6 @@
 package views;
 import javax.swing.*;
+import java.sql.SQLException;
 
 public class WindowManager {
 
@@ -8,7 +9,7 @@ public class WindowManager {
     private WindowManager(){
 
     }
-    public void showWindow(Windows window){
+    public void showWindow(Windows window) throws SQLException {
         window.window.createAndShowUI();
     }
 
@@ -18,6 +19,7 @@ public class WindowManager {
         }
         return instance;
     }
+
 
     public JFrame getFrame() {
         return frame;

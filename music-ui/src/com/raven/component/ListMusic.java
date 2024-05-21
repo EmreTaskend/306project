@@ -1,49 +1,51 @@
 package com.raven.component;
 
+import Managers.SelectSongManager;
 import com.raven.model.Model_Music;
 import views.WindowManager;
 import views.Windows;
 
-import java.awt.Component;
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import javax.swing.DefaultListCellRenderer;
-import javax.swing.DefaultListModel;
-import javax.swing.JList;
-import javax.swing.ListCellRenderer;
-import javax.swing.SwingUtilities;
+import java.sql.SQLException;
 
 public class ListMusic<E extends Object> extends JList<E> {
-
-    public final DefaultListModel model;
+    public final DefaultListModel<E> model;
     private int playIndex = -1;
 
     public ListMusic() {
-        model = new DefaultListModel();
+        model = new DefaultListModel<>();
         setModel(model);
         setOpaque(false);
         addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent me) {
-                if (SwingUtilities.isLeftMouseButton(me)) {
-                    playIndex = locationToIndex(me.getPoint());
-                    repaint();
+                if (SwingUtilities.isLeftMouseButton(me) && me.getClickCount() == 2) {
+                    int index = locationToIndex(me.getPoint());
+                    if (index != playIndex) {
+                        playIndex = index;
+                        Model_Music selectedMusic = (Model_Music) getModel().getElementAt(playIndex);
+                        SelectSongManager.getInstance().setCur_Song(selectedMusic);
+                        try {
+                            WindowManager.getInstance().showWindow(Windows.SongView);
+                        } catch (SQLException e) {
+                            throw new RuntimeException(e);
+                        }
+                        repaint();
+                    }
                 }
             }
         });
     }
 
     @Override
-    public ListCellRenderer getCellRenderer() {
+    public ListCellRenderer<? super E> getCellRenderer() {
         return new DefaultListCellRenderer() {
             @Override
-            public Component getListCellRendererComponent(JList<?> jlist, Object o, int index, boolean selected, boolean focus) {
-                Model_Music data;
-                if (o instanceof Model_Music) {
-                    data = (Model_Music) o;
-                } else {
-                    data = new Model_Music("1", "No Music", "00:00");
-                }
+            public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
+                Model_Music data = value instanceof Model_Music ? (Model_Music) value : new Model_Music("1", "No Music", "00:00", " ", " ", false);
                 ItemMusic item = new ItemMusic(data);
                 item.setPlay(index == playIndex);
                 return item;
@@ -52,7 +54,6 @@ public class ListMusic<E extends Object> extends JList<E> {
     }
 
     public void addItem(Model_Music data) {
-        System.out.println(data.getName());
-        model.addElement(data);
+        model.addElement((E) data);
     }
 }

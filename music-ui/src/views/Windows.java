@@ -8,7 +8,9 @@ public enum Windows{
     Signup(new SignUpView()),
     Playlists(new PlaylistsView()),
     MusicsPl(new MusicsPl()),
-    ArtistView(new ArtistView());
+    ArtistView(new ArtistView()),
+    SongView(new SongView()),
+    ChoosePlaylistView(new ChoosePlaylistView());
     final Window window;
 
     Windows(Window window){

@@ -12,10 +12,10 @@ public class Form_Artists extends javax.swing.JPanel {
     }
 
     private void init() {
-        mostPopular.addImage(new Model_Popular(new ImageIcon(getClass().getResource("/com/raven/icon/test/_121539315_taylorred976.jpg")), "Taylor Swift", "15 Albums | 17.5M Follower"));
-        mostPopular.addImage(new Model_Popular(new ImageIcon(getClass().getResource("/com/raven/icon/test/kygo.png")), "Kygo and Alan Walker", "15 Albums | 17.5M Mollowers"));
-        mostPopular.addImage(new Model_Popular(new ImageIcon(getClass().getResource("/com/raven/icon/test/Apple-Music-Live-Ed-Sheeran-with-guitar_big.jpg.large.jpg")), "Ed Sheeran", "15 Albums | 17.5M Mollowers"));
-        mostPopular.addImage(new Model_Popular(new ImageIcon(getClass().getResource("/com/raven/icon/test/sigala.jpg")), "Sigala", "15 Albums | 17.5M Mollowers"));
+        for(Model_Popular m: DatabaseController.getInstance().fetchPopularArtists()){
+            mostPopular.addImage(m);
+        }
+       //mostPopular.addImage(new Model_Popular(new ImageIcon(getClass().getResource("/com/raven/icon/test/Kanye-West-1.jpg")), "Kanye West", "15 Albums | 17.5M Mollowers"));
     }
 
     @SuppressWarnings("unchecked")

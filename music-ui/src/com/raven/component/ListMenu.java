@@ -2,6 +2,7 @@ package com.raven.component;
 
 import com.raven.model.Model_Menu;
 import java.awt.Component;
+import java.sql.SQLException;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.DefaultListModel;
 import javax.swing.JList;
@@ -29,7 +30,11 @@ public class ListMenu<E extends Object> extends JList<E> {
                     data = new Model_Menu("No Data", "song");
                 }
                 ItemMenu item = new ItemMenu(data);
-                item.setSelected(selected);
+                try {
+                    item.setSelected(selected);
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
                 return item;
             }
         };

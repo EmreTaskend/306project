@@ -1,6 +1,7 @@
 package views;
 
 import Managers.DatabaseController;
+import Managers.ListMusicController;
 import Managers.MenuListsController;
 
 import javax.swing.*;
@@ -10,6 +11,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -104,6 +106,7 @@ public class PlaylistsView extends JFrame implements Window {
                     createPlaylistButton(newPlaylistName);
                     playlistNames.add(newPlaylistName);
                     DatabaseController.getInstance().createPlaylist(newPlaylistName);
+                    MenuListsController.getInstance().list1.clearSelection();
                     dispose();
                     createAndShowUI();
                 }
@@ -142,7 +145,11 @@ public class PlaylistsView extends JFrame implements Window {
             public void actionPerformed(ActionEvent e) {
                 DatabaseController.setChoosedPlaylist(playlistName);
                 System.out.println(DatabaseController.getChoosedPlaylist());
-                WindowManager.getInstance().showWindow(Windows.MusicsPl);
+                try {
+                    WindowManager.getInstance().showWindow(Windows.MusicsPl);
+                } catch (SQLException ex) {
+                    throw new RuntimeException(ex);
+                }
             }
         });
         playlistPanel.add(Box.createRigidArea(new Dimension(0, 5))); // Add some space between buttons

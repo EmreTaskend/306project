@@ -1,6 +1,18 @@
 package com.raven.model;
 
+import com.raven.component.ListMusic;
+
 public class Model_Music {
+    ListMusic lm = new ListMusic();
+    public boolean already = false;
+
+    public boolean isAlready() {
+        return already;
+    }
+
+    public void setAlready(boolean already) {
+        this.already = already;
+    }
 
     public String getNo() {
         return no;
@@ -18,24 +30,63 @@ public class Model_Music {
         this.name = name;
     }
 
-    public String getTime() {
-        return time;
-    }
 
-    public void setTime(String time) {
-        this.time = time;
-    }
 
-    public Model_Music(String no, String name, String time) {
+    public Model_Music(String no, String name, String rating, String artist, String album, boolean is_trending) {
         this.no = no;
         this.name = name;
-        this.time = time;
+        this.rating = rating;
+        Artist = artist;
+        Album = album;
+        this.is_trending = is_trending;
     }
 
-    public Model_Music() {
-    }
+
 
     private String no;
     private String name;
-    private String time;
+    private String rating;
+    private  String Artist;
+    private  String Album;
+    private  boolean is_trending;
+
+    public String getArtist() {
+        return Artist;
+    }
+
+    public void setArtist(String artist) {
+        Artist = artist;
+    }
+
+    public String getAlbum() {
+        return Album;
+    }
+
+    public void setAlbum(String album) {
+        Album = album;
+    }
+
+    public String getRating() {
+        return rating;
+    }
+
+    public void setRating(String rating) {
+        this.rating = rating;
+    }
+
+    public boolean isIs_trending() {
+        return is_trending;
+    }
+
+    public ListMusic getLm() {
+        return lm;
+    }
+
+    public void setLm(ListMusic lm) {
+        this.lm = lm;
+    }
+
+    public void setIs_trending(boolean is_trending) {
+        this.is_trending = is_trending;
+    }
 }

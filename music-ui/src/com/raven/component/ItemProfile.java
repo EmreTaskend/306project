@@ -1,12 +1,18 @@
 package com.raven.component;
 
+import Managers.DatabaseController;
+import Managers.ListMusicController;
 import com.raven.model.Model_Profile;
+import views.OtherMusicsPL;
 
-public class ItemProfile extends javax.swing.JPanel {
+import java.awt.Color;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import javax.swing.BorderFactory;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 
-    public Model_Profile getData() {
-        return data;
-    }
+public class ItemProfile extends JPanel {
 
     private final Model_Profile data;
 
@@ -18,6 +24,24 @@ public class ItemProfile extends javax.swing.JPanel {
         lbDescription.setText(data.getDescription());
         if (data.getImage() != null) {
             imageAvatar.setImage(data.getImage());
+        }
+    }
+
+
+
+
+    public void setSelected(boolean selected) {
+        if (selected) {
+            setBackground(new Color(220, 220, 220)); // Light gray background for selection
+            setBorder(BorderFactory.createLineBorder(new Color(150, 150, 150))); // Darker gray border for selection
+            DatabaseController.choosedPlaylist = "Liked";
+            DatabaseController.choosedLikedName = data.getName();
+            OtherMusicsPL mo = new OtherMusicsPL();
+            mo.createAndShowUI();
+            ListMusicController.getInstance().list.clearSelection();
+        } else {
+            setBackground(Color.WHITE); // Default background color
+            setBorder(BorderFactory.createLineBorder(Color.WHITE)); // Default border color
         }
     }
 
@@ -47,23 +71,23 @@ public class ItemProfile extends javax.swing.JPanel {
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(imageAvatar, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 108, Short.MAX_VALUE))
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(imageAvatar, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 108, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(imageAvatar, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(layout.createSequentialGroup()
+                                                .addGap(0, 0, Short.MAX_VALUE)
+                                                .addComponent(imageAvatar, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 

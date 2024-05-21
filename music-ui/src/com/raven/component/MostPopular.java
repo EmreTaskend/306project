@@ -1,8 +1,8 @@
 package com.raven.component;
 
+import Managers.ArtistController;
 import com.raven.model.Model_Popular;
-import views.WindowManager;
-import views.Windows;
+import views.ArtistView;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -55,13 +55,16 @@ public class MostPopular extends javax.swing.JLayeredPane {
         item.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                WindowManager.getInstance().showWindow(Windows.ArtistView);
+                ArtistController.getInstance().selectedArtist = data;
+                ArtistView artistView = new ArtistView();
+                artistView.createAndShowUI();
             }
         });
         panel.add(item);
         panel.repaint();
         panel.revalidate();
     }
+
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

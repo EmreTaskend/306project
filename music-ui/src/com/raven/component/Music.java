@@ -1,6 +1,6 @@
 package com.raven.component;
 
-import Managers.Song;
+import Managers.relClasses.Song;
 import com.raven.model.Model_Music;
 
 import javax.swing.*;
@@ -18,7 +18,6 @@ public class Music extends javax.swing.JPanel {
     }
 
     private void init() {
-        System.out.println(list.model.elements());
         // Create a JScrollPane and add the ListMusic component to it
         JScrollPane scrollPane = new JScrollPane(list);
 
@@ -56,8 +55,10 @@ public class Music extends javax.swing.JPanel {
     private void initComponents() {
         list = new com.raven.component.ListMusic<>();
         for(int i = 0; i < songlist.size(); i++){
-            list.addItem(new Model_Music(String.valueOf(i+1), songlist.get(i).name, String.valueOf(songlist.get(i).rating)));
+            Model_Music m = new Model_Music(String.valueOf(i+1), songlist.get(i).name, String.valueOf(songlist.get(i).rating),songlist.get(i).artist,songlist.get(i).Album,songlist.get(i).is_trending);
+            list.addItem(m);
         }
+
 
 
         jLabel1 = new javax.swing.JLabel();

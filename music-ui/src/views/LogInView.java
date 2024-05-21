@@ -117,7 +117,11 @@ public class LogInView extends javax.swing.JFrame implements Window {
         jButton2.setText("Sign Up");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                try {
+                    jButton2ActionPerformed(evt);
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
             }
         });
 
@@ -190,8 +194,10 @@ public class LogInView extends javax.swing.JFrame implements Window {
 
     }
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {
-        wm.showWindow(Windows.Signup);
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) throws SQLException {
+        SignUpView sg = new SignUpView();
+        sg.createAndShowUI();
+        dispose();
     }
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {
         String enteredUsername = jTextField1.getText();
@@ -208,14 +214,7 @@ public class LogInView extends javax.swing.JFrame implements Window {
             JOptionPane.showMessageDialog(LogInView.this, "Error occurred. Please try again later.");
         }
     }
-    private void resetUI() {
-        // Clear input fields
-        jTextField1.setText("");
-        jPasswordField1.setText("");
 
-        // Clear any displayed messages or states
-        // For example, you might reset labels or hide/show components as needed
-    }
     private javax.swing.JPanel Left;
     private javax.swing.JPanel Right;
     private javax.swing.JButton jButton1;

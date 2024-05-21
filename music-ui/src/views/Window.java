@@ -1,5 +1,7 @@
 package views;
 
+import java.sql.SQLException;
+
 public interface Window {
-    void createAndShowUI();
+    void createAndShowUI() throws SQLException;
 }

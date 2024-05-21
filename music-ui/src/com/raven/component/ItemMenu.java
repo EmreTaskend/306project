@@ -1,6 +1,10 @@
 package com.raven.component;
 
+import Managers.DatabaseController;
+import Managers.MenuListsController;
 import com.raven.model.Model_Menu;
+import views.HighestRatedAlbumsView;
+import views.HighestRatedArtistsView;
 import views.WindowManager;
 import views.Windows;
 
@@ -8,6 +12,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
+import java.sql.SQLException;
 import java.util.Objects;
 
 public class ItemMenu extends javax.swing.JPanel {
@@ -19,7 +24,7 @@ public class ItemMenu extends javax.swing.JPanel {
     private final Model_Menu data;
     private boolean selected;
 
-    public void setSelected(boolean selected) {
+    public void setSelected(boolean selected) throws SQLException {
         this.selected = selected;
         if (selected) {
             lbText.setFont(new java.awt.Font("sansserif", 1, 14));
@@ -27,6 +32,21 @@ public class ItemMenu extends javax.swing.JPanel {
             lbIcon.setIcon(data.toIconSelected());
             if(Objects.equals(data.getMenuName(), "Playlist")) {
                 WindowManager.getInstance().showWindow(Windows.Playlists);
+            }
+            if(Objects.equals(data.getMenuName(), "Liked")) {
+                DatabaseController.getInstance().choosedPlaylist = "Liked";
+                WindowManager.getInstance().showWindow(Windows.MusicsPl);
+                MenuListsController.getInstance().list1.clearSelection();
+            }
+            if(Objects.equals(data.getMenuName(), "Albums")){
+                HighestRatedAlbumsView hv = new HighestRatedAlbumsView();
+                hv.createAndShowUI();
+                MenuListsController.getInstance().list1.clearSelection();
+            }
+            if(Objects.equals(data.getMenuName(), "Artists")){
+                HighestRatedArtistsView hv = new HighestRatedArtistsView();
+                hv.createAndShowUI();
+                MenuListsController.getInstance().list1.clearSelection();
             }
         } else {
             lbText.setFont(new java.awt.Font("sansserif", 0, 14));

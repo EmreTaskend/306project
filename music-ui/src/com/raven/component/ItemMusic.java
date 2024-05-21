@@ -1,87 +1,102 @@
 package com.raven.component;
 
+import Managers.DatabaseController;
+import Managers.relClasses.Song;
 import com.raven.model.Model_Music;
-import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.RenderingHints;
-import javax.swing.ImageIcon;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.Objects;
 
-public class ItemMusic extends javax.swing.JPanel {
-
-    public boolean isPlay() {
-        return play;
-    }
-
+public class ItemMusic extends JPanel {
     private final Model_Music data;
     private boolean play;
-
-    public void setPlay(boolean play) {
-        this.play = play;
-        if (play) {
-            lbIcon.setText("");
-            lbIcon.setIcon(new ImageIcon(getClass().getResource("/com/raven/icon/playing.png")));
-            lbText.setFont(new java.awt.Font("sansserif", 1, 14));
-            lbText.setForeground(new Color(203, 30, 148));
-            lbTime.setFont(new java.awt.Font("sansserif", 1, 14));
-            lbTime.setForeground(new Color(203, 30, 148));
-        } else {
-            lbIcon.setIcon(null);
-            lbIcon.setText(data.getNo());
-            lbText.setFont(new java.awt.Font("sansserif", 0, 14));
-            lbText.setForeground(new Color(51, 51, 51));
-            lbTime.setFont(new java.awt.Font("sansserif", 0, 14));
-            lbTime.setForeground(new Color(51, 51, 51));
-        }
-    }
+    private boolean liked;
+    private JLabel lbIcon;
+    private JLabel lbText;
+    private JLabel lbTime;
+    private JButton btnLike;
 
     public ItemMusic(Model_Music data) {
         this.data = data;
         initComponents();
         setOpaque(false);
         lbText.setText(data.getName());
-        lbTime.setText(data.getTime());
+        lbTime.setText(data.getRating());
     }
 
-    @SuppressWarnings("unchecked")
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    public void setPlay(boolean play) {
+        if (this.play != play) {
+            this.play = play;
+            if (play) {
+                lbIcon.setText("");
+                lbIcon.setIcon(new ImageIcon(getClass().getResource("/com/raven/icon/playing.png")));
+                lbText.setFont(new Font("sansserif", Font.BOLD, 14));
+                lbText.setForeground(new Color(203, 30, 148));
+                lbTime.setFont(new Font("sansserif", Font.BOLD, 14));
+                lbTime.setForeground(new Color(203, 30, 148));
+            } else {
+                lbIcon.setIcon(null);
+                lbIcon.setText(data.getNo());
+                lbText.setFont(new Font("sansserif", Font.PLAIN, 14));
+                lbText.setForeground(new Color(51, 51, 51));
+                lbTime.setFont(new Font("sansserif", Font.PLAIN, 14));
+                lbTime.setForeground(new Color(51, 51, 51));
+            }
+        }
+    }
+
+
     private void initComponents() {
+        lbIcon = new JLabel();
+        lbText = new JLabel();
+        lbTime = new JLabel();
+        btnLike = new JButton();
 
-        lbIcon = new javax.swing.JLabel();
-        lbText = new javax.swing.JLabel();
-        lbTime = new javax.swing.JLabel();
+        lbIcon.setHorizontalAlignment(SwingConstants.CENTER);
 
-        lbIcon.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-
-        lbText.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
-        lbText.setForeground(new java.awt.Color(51, 51, 51));
+        lbText.setFont(new Font("sansserif", Font.PLAIN, 14));
+        lbText.setForeground(new Color(51, 51, 51));
         lbText.setText("Music Name");
 
-        lbTime.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
-        lbTime.setForeground(new java.awt.Color(51, 51, 51));
-        lbTime.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        lbTime.setFont(new Font("sansserif", Font.PLAIN, 14));
+        lbTime.setForeground(new Color(51, 51, 51));
+        lbTime.setHorizontalAlignment(SwingConstants.RIGHT);
         lbTime.setText("03:00");
+        btnLike.setIcon(new ImageIcon(getClass().getResource("/com/raven/icon/test/heart.png")));
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
+        btnLike.setBorderPainted(false);
+        btnLike.setContentAreaFilled(false);
+        btnLike.setFocusPainted(false);
+        btnLike.setOpaque(false);
+        btnLike.setEnabled(true); // Ensure the button is enabled
+        btnLike.setVisible(true); // Ensure the button is visible
+
+
+        GroupLayout layout = new GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(lbIcon, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(15, 15, 15)
-                .addComponent(lbText)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(lbTime, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(lbIcon, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
+                                .addGap(15, 15, 15)
+                                .addComponent(lbText)
+                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(lbTime, GroupLayout.PREFERRED_SIZE, 53, GroupLayout.PREFERRED_SIZE)
+                                .addGap(10, 10, 10)
+                                .addComponent(btnLike, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap())
         );
         layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(lbIcon, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)
-            .addComponent(lbTime, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(lbText, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                        .addComponent(lbIcon, GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)
+                        .addComponent(lbTime, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(lbText, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnLike, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
-    }// </editor-fold>//GEN-END:initComponents
+    }
 
     @Override
     protected void paintComponent(Graphics grphcs) {
@@ -91,10 +106,4 @@ public class ItemMusic extends javax.swing.JPanel {
         g2.fillRect(0, getHeight() - 2, getWidth(), getHeight());
         super.paintComponent(grphcs);
     }
-
-    // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel lbIcon;
-    private javax.swing.JLabel lbText;
-    private javax.swing.JLabel lbTime;
-    // End of variables declaration//GEN-END:variables
 }
