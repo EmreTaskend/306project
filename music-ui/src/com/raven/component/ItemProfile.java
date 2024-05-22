@@ -1,15 +1,18 @@
 package com.raven.component;
 
+import Managers.ArtistController;
 import Managers.DatabaseController;
 import Managers.ListMusicController;
+import Managers.MenuListsController;
+import com.raven.model.Model_Popular;
 import com.raven.model.Model_Profile;
-import views.OtherMusicsPL;
+import views.AlbumSongsView;
+import views.OthersLikedMusicsView;
+import views.OthersMusicsView;
 
 import java.awt.Color;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.sql.SQLException;
 import javax.swing.BorderFactory;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 public class ItemProfile extends JPanel {
@@ -30,20 +33,37 @@ public class ItemProfile extends JPanel {
 
 
 
-    public void setSelected(boolean selected) {
+    public void setSelected(boolean selected) throws SQLException {
         if (selected) {
             setBackground(new Color(220, 220, 220)); // Light gray background for selection
             setBorder(BorderFactory.createLineBorder(new Color(150, 150, 150))); // Darker gray border for selection
+
+            // Set chosen playlist and liked name
             DatabaseController.choosedPlaylist = "Liked";
             DatabaseController.choosedLikedName = data.getName();
-            OtherMusicsPL mo = new OtherMusicsPL();
-            mo.createAndShowUI();
+            // Perform actions based on profile data
+            if (!DatabaseController.getInstance().fetchUsers(data.getName())) {
+                ArtistController.getInstance().selectedArtist = new Model_Popular(data.getImage(), data.getName(), data.getDescription());
+                ArtistController.getInstance().selectedAlbum = data.getDescription();
+                ListMusicController.getInstance().listCompatible.clearSelection();
+                new AlbumSongsView().createAndShowUI();
+            } else if (!data.getDescription().contains("Rating:")) {
+                MenuListsController.getInstance().owner = data.getName();
+                MenuListsController.getInstance().plname = data.getDescription();
+                ListMusicController.getInstance().listBestPLs.clearSelection();
+                new OthersMusicsView().createAndShowUI();
+            } else {
+                new OthersLikedMusicsView().createAndShowUI();
+            }
+
+            // Clear selection to prevent multiple windows opening
             ListMusicController.getInstance().list.clearSelection();
         } else {
             setBackground(Color.WHITE); // Default background color
             setBorder(BorderFactory.createLineBorder(Color.WHITE)); // Default border color
         }
     }
+
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents

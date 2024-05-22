@@ -39,7 +39,7 @@ public class SignUpView extends javax.swing.JFrame implements Window {
         jPanel1.setPreferredSize(new java.awt.Dimension(800, 500));
         jPanel1.setLayout(null);
 
-        jPanel2.setBackground(new java.awt.Color(0, 102, 102));
+        jPanel2.setBackground(new java.awt.Color(0, 0, 0));
 
         //jLabel1.setIcon(new javax.swing.ImageIcon("/Users/emretaskend/Documents/GitHub/4thDimension-comp302/LanceOfDestiny-FourthDimension/src/main/java/org/LanceOfDestiny/Resources/Image/Screenshot 2024-04-13 at 15.41.59.png"));
 
@@ -81,7 +81,7 @@ public class SignUpView extends javax.swing.JFrame implements Window {
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
 
-        jLabel4.setBackground(new java.awt.Color(0, 102, 102));
+        jLabel4.setBackground(new java.awt.Color(255, 0, 10));
         jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel4.setText("SIGN UP");
 
@@ -101,8 +101,8 @@ public class SignUpView extends javax.swing.JFrame implements Window {
 
         jLabel8.setText("I've an account");
 
-        jButton1.setBackground(new java.awt.Color(0, 102, 102));
-        jButton1.setForeground(new java.awt.Color(0, 102, 102));
+        jButton1.setBackground(new java.awt.Color(0, 0, 0));
+        jButton1.setForeground(new java.awt.Color(0, 0, 0));
         jButton1.setText("Sign Up");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

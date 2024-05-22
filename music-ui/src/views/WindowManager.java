@@ -12,6 +12,9 @@ public class WindowManager {
     public void showWindow(Windows window) throws SQLException {
         window.window.createAndShowUI();
     }
+    public void repWindow(Windows window){
+        window.window.repaint();
+    }
 
     public static WindowManager getInstance(){
         if(instance == null){

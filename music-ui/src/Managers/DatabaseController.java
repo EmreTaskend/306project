@@ -1,20 +1,18 @@
 package Managers;
 
 import Managers.relClasses.HighestRatedAlbum;
-import Managers.relClasses.RateArtist;
 import Managers.relClasses.Song;
 import com.raven.model.Model_Popular;
 import com.raven.model.Model_Profile;
 
 import javax.swing.*;
-import java.awt.*;
 import java.sql.*;
 import java.util.ArrayList;
 
 public class DatabaseController {
     private final Connection connection;
     private static DatabaseController instance;
-    private static String username;
+    public static String username;
     public static String choosedPlaylist;
     public static String choosedLikedName;
 
@@ -60,6 +58,13 @@ public class DatabaseController {
             return resultSet.next();
         }
     }
+    public boolean fetchUsers(String username) throws SQLException {
+        try (PreparedStatement pstmt = connection.prepareStatement("SELECT * FROM User WHERE username = ?")) {
+            pstmt.setString(1, username);
+            ResultSet resultSet = pstmt.executeQuery();
+            return resultSet.next();
+        }
+    }
     public ArrayList<Song> fetchPlaylistSongs() {
         ArrayList<Song> trendingSongs = new ArrayList<>();
         try (PreparedStatement pstmt = connection.prepareStatement("""
@@ -70,7 +75,7 @@ public class DatabaseController {
             pstmt.setString(1, DatabaseController.username);
             pstmt.setString(2, DatabaseController.choosedPlaylist);
             ResultSet resultSet = pstmt.executeQuery();
-
+            ArrayList<String> liked = DatabaseController.getInstance().fetchPlaylistSongs("Liked");
             while (resultSet.next()) {
                 String name = resultSet.getString("name");
                 String artist = resultSet.getString("artist");
@@ -78,6 +83,67 @@ public class DatabaseController {
                 boolean isTrending = resultSet.getBoolean("is_trending");
                 // Create a new Song object and add it to the list
                 Song song = new Song(name, artist, rating, isTrending);
+                if(liked.contains(name)) {
+                    song.setLiked(true);
+                }
+                trendingSongs.add(song);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return trendingSongs;
+    }
+    public ArrayList<Song> fetchSearched(String src) {
+        ArrayList<Song> trendingSongs = new ArrayList<>();
+        try (PreparedStatement pstmt = connection.prepareStatement("""
+                    SELECT *\s
+                    FROM Song S
+                    WHERE S.name LIKE ?;
+                                
+                """)) {
+            pstmt.setString(1, src+"%");
+            ResultSet resultSet = pstmt.executeQuery();
+            ArrayList<String> liked = DatabaseController.getInstance().fetchPlaylistSongs("Liked");
+            while (resultSet.next()) {
+                String name = resultSet.getString("name");
+                String artist = resultSet.getString("artist");
+                double rating = resultSet.getDouble("rating");
+                boolean isTrending = resultSet.getBoolean("is_trending");
+                // Create a new Song object and add it to the list
+                Song song = new Song(name, artist, rating, isTrending);
+                if(liked.contains(name)) {
+                    song.setLiked(true);
+                }
+                trendingSongs.add(song);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return trendingSongs;
+    }
+    public ArrayList<Song> fetchPlaylistSongs(String owner, String plname) {
+        ArrayList<Song> trendingSongs = new ArrayList<>();
+        try (PreparedStatement pstmt = connection.prepareStatement("""
+            SELECT * 
+            FROM PlaylistSongs P, Song S
+            WHERE P.owner = ? AND S.name = P.songname AND P.plname = ? 
+            """)) {
+            pstmt.setString(1, owner);
+            pstmt.setString(2, plname);
+            ResultSet resultSet = pstmt.executeQuery();
+            ArrayList<String> liked = DatabaseController.getInstance().fetchPlaylistSongs("Liked");
+            while (resultSet.next()) {
+                String name = resultSet.getString("name");
+                String artist = resultSet.getString("artist");
+                double rating = resultSet.getDouble("rating");
+                boolean isTrending = resultSet.getBoolean("is_trending");
+                // Create a new Song object and add it to the list
+                Song song = new Song(name, artist, rating, isTrending);
+                if(liked.contains(name)) {
+                    song.setLiked(true);
+                }
                 trendingSongs.add(song);
             }
         } catch (SQLException e) {
@@ -110,6 +176,7 @@ public class DatabaseController {
     }
     public ArrayList<Song> fetchOtherLikes() {
         ArrayList<Song> trendingSongs = new ArrayList<>();
+
         try (PreparedStatement pstmt = connection.prepareStatement("""
             SELECT * 
             FROM PlaylistSongs P, Song S
@@ -119,7 +186,7 @@ public class DatabaseController {
             pstmt.setString(2, DatabaseController.choosedPlaylist);
             System.out.println(DatabaseController.choosedLikedName + " " + DatabaseController.choosedPlaylist);
             ResultSet resultSet = pstmt.executeQuery();
-
+            ArrayList<String> liked = DatabaseController.getInstance().fetchPlaylistSongs("Liked");
             while (resultSet.next()) {
                 String name = resultSet.getString("name");
                 String artist = resultSet.getString("artist");
@@ -127,6 +194,9 @@ public class DatabaseController {
                 boolean isTrending = resultSet.getBoolean("is_trending");
                 // Create a new Song object and add it to the list
                 Song song = new Song(name, artist, rating, isTrending);
+                if(liked.contains(song.name)){
+                    song.setLiked(true);
+                }
                 trendingSongs.add(song);
             }
         } catch (SQLException e) {
@@ -137,6 +207,7 @@ public class DatabaseController {
     }
     public ArrayList<Song> fetchAlbumSongs(String artistname, String albumname) {
         ArrayList<Song> trendingSongs = new ArrayList<>();
+
         try (PreparedStatement pstmt = connection.prepareStatement("""
             SELECT * 
             FROM Album A, Song S
@@ -145,7 +216,7 @@ public class DatabaseController {
             pstmt.setString(1, artistname);
             pstmt.setString(2, albumname);
             ResultSet resultSet = pstmt.executeQuery();
-
+            ArrayList<String> liked = DatabaseController.getInstance().fetchPlaylistSongs("Liked");
             while (resultSet.next()) {
                 String name = resultSet.getString("name");
                 String artist = resultSet.getString("artist");
@@ -153,6 +224,9 @@ public class DatabaseController {
                 boolean isTrending = resultSet.getBoolean("is_trending");
                 // Create a new Song object and add it to the list
                 Song song = new Song(name, artist, rating, isTrending);
+                if(liked.contains(name)){
+                    song.setLiked(true);
+                }
                 trendingSongs.add(song);
             }
         } catch (SQLException e) {
@@ -169,7 +243,7 @@ public class DatabaseController {
             """)) {
             pstmt.setBoolean(1, true);
             ResultSet resultSet = pstmt.executeQuery();
-
+            ArrayList<String> liked = DatabaseController.getInstance().fetchPlaylistSongs("Liked");
             while (resultSet.next()) {
                 String name = resultSet.getString("name");
                 String artist = resultSet.getString("artist");
@@ -177,6 +251,9 @@ public class DatabaseController {
                 boolean isTrending = resultSet.getBoolean("is_trending");
                 // Create a new Song object and add it to the list
                 Song song = new Song(name, artist, rating, isTrending);
+                if(liked.contains(name)){
+                    song.setLiked(true);
+                }
                 trendingSongs.add(song);
             }
         } catch (SQLException e) {
@@ -382,13 +459,67 @@ public class DatabaseController {
             while (resultSet.next()) {
                 String name = resultSet.getString("owner");
                 Double rating = resultSet.getDouble("average_rating");
-                playlists.add(new Model_Profile(name, "Rating: " + String.valueOf(rating),new ImageIcon(getClass().getResource("/com/raven/icon/test/LOVED.jpg"))));
+                Model_Profile a = new Model_Profile(name, "Rating: " + String.valueOf(rating),new ImageIcon(getClass().getResource("/com/raven/icon/test/LOVED.jpg")));
+                playlists.add(a);
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
         return playlists;
     }
+    public ArrayList<Model_Profile> fetchCompatibleAlbums(){
+        ArrayList<Model_Profile> playlists = new ArrayList<>();
+        try (PreparedStatement pstmt = connection.prepareStatement("""
+                    SELECT ar.artistname, al.albumname, ar.image, COUNT(ps.songname) AS song_count FROM PlaylistSongs ps JOIN Album al ON ps.songname = al.songname JOIN Artist ar ON al.artistname = ar.artistname JOIN Song s ON ps.songname = s.name JOIN User u ON ps.owner = u.username WHERE u.username = ? AND ps.plname = 'Liked' GROUP BY ar.artistname, al.albumname, ar.image ORDER BY song_count DESC LIMIT 5\s
+                """)) {
+            pstmt.setString(1, username);
+            ResultSet resultSet = pstmt.executeQuery();
+
+            while (resultSet.next()) {
+                String artistname = resultSet.getString("artistname");
+                String albumname = resultSet.getString("albumname");
+                String image = resultSet.getString("image");
+                Model_Profile a = new Model_Profile(artistname,albumname,new ImageIcon(getClass().getResource("/"+image)));
+                playlists.add(a);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return playlists;
+    }
+    public ArrayList<Model_Profile> fetchBestPlaylists(){
+        ArrayList<Model_Profile> playlists = new ArrayList<>();
+        try (PreparedStatement pstmt = connection.prepareStatement("""
+                 SELECT\s
+                     ps.plname,\s
+                     ps.owner,\s
+                     COUNT(ps.songname) AS song_count
+                 FROM\s
+                     PlaylistSongs ps
+                 WHERE\s
+                     ps.owner <> ? AND ps.plname <> "Liked"
+                 GROUP BY\s
+                     ps.plname, ps.owner
+                 ORDER BY\s
+                     song_count DESC
+                 LIMIT 5;
+                         
+                """)) {
+            pstmt.setString(1, username);
+            ResultSet resultSet = pstmt.executeQuery();
+
+            while (resultSet.next()) {
+                String artistname = resultSet.getString("owner");
+                String albumname = resultSet.getString("plname");
+                Model_Profile a = new Model_Profile(artistname,albumname,new ImageIcon(getClass().getResource("/com/raven/icon/test/LOVED.jpg")));
+                playlists.add(a);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return playlists;
+    }
+
 
 
     public static String getChoosedPlaylist() {

@@ -2,6 +2,7 @@ package views;
 
 import Managers.ArtistController;
 import Managers.DatabaseController;
+import Managers.ListMusicController;
 import Managers.MenuListsController;
 import com.raven.component.Music;
 
@@ -15,6 +16,7 @@ public class AlbumSongsView extends JFrame implements Window {
 
     @Override
     public void createAndShowUI() {
+        ListMusicController.getInstance().listCompatible.clearSelection();
         if(m != null){
             resetUI();
         }
@@ -30,6 +32,8 @@ public class AlbumSongsView extends JFrame implements Window {
             @Override
             public void windowClosing(WindowEvent e) {
                 MenuListsController.getInstance().list1.clearSelection();
+                ListMusicController.getInstance().listBestPLs.clearSelection();
+                ListMusicController.getInstance().listCompatible.clearSelection();
                 DatabaseController.setChoosedPlaylist("");
                 dispose();
             }

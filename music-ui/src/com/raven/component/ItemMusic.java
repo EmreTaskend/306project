@@ -7,12 +7,12 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.Objects;
 
 public class ItemMusic extends JPanel {
     private final Model_Music data;
     private boolean play;
-    private boolean liked;
     private JLabel lbIcon;
     private JLabel lbText;
     private JLabel lbTime;
@@ -64,7 +64,12 @@ public class ItemMusic extends JPanel {
         lbTime.setForeground(new Color(51, 51, 51));
         lbTime.setHorizontalAlignment(SwingConstants.RIGHT);
         lbTime.setText("03:00");
-        btnLike.setIcon(new ImageIcon(getClass().getResource("/com/raven/icon/test/heart.png")));
+
+        if(data.liked) {
+            btnLike.setIcon(new ImageIcon(getClass().getResource("/com/raven/icon/test/heart.png")));
+        }else{
+            btnLike.setIcon(new ImageIcon(getClass().getResource("/com/raven/icon/love.png")));
+        }
 
         btnLike.setBorderPainted(false);
         btnLike.setContentAreaFilled(false);

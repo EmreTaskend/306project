@@ -40,10 +40,10 @@ public class LogInView extends javax.swing.JFrame implements Window {
         jPanel1.setPreferredSize(new java.awt.Dimension(800, 500));
         jPanel1.setLayout(null);
 
-        Right.setBackground(new java.awt.Color(0, 102, 102));
+        Right.setBackground(new java.awt.Color(0, 0, 0));
         Right.setPreferredSize(new java.awt.Dimension(400, 500));
 
-        //jLabel5.setIcon(new javax.swing.ImageIcon("/Users/emretaskend/Documents/GitHub/4thDimension-comp302/LanceOfDestiny-FourthDimension/src/main/java/org/LanceOfDestiny/Resources/Image/Screenshot 2024-04-13 at 15.41.59.png"));
+        //jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/raven/icon/test/taylorswift.jpg")));
 
 
         jLabel6.setFont(new java.awt.Font("Showcard Gothic", 1, 24)); // NOI18N
@@ -87,7 +87,7 @@ public class LogInView extends javax.swing.JFrame implements Window {
         Left.setMinimumSize(new java.awt.Dimension(400, 500));
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(0, 102, 102));
+        jLabel1.setForeground(new java.awt.Color(255, 10, 60));
         jLabel1.setText("LOGIN");
 
         jLabel2.setBackground(new java.awt.Color(102, 102, 102));
@@ -103,7 +103,7 @@ public class LogInView extends javax.swing.JFrame implements Window {
 
         jButton1.setBackground(new java.awt.Color(102, 102, 102));
         jButton1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(0, 102, 102));
+        jButton1.setForeground(new java.awt.Color(0, 0, 0));
         jButton1.setText("Login");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -113,7 +113,7 @@ public class LogInView extends javax.swing.JFrame implements Window {
         jLabel4.setText("I don't have an account");
 
         jButton2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jButton2.setForeground(new java.awt.Color(40, 81, 91));
+        jButton2.setForeground(new java.awt.Color(0, 0, 0));
         jButton2.setText("Sign Up");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

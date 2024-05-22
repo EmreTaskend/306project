@@ -50,6 +50,8 @@ public class Model_Music {
     private  String Album;
     private  boolean is_trending;
 
+    public boolean liked;
+
     public String getArtist() {
         return Artist;
     }

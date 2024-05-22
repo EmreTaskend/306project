@@ -8,6 +8,15 @@ public class Song {
     public double rating;
     public Boolean is_trending;
     public String Album;
+    public boolean liked = false;
+
+    public boolean isLiked() {
+        return liked;
+    }
+
+    public void setLiked(boolean liked) {
+        this.liked = liked;
+    }
 
     public Song(String name, String artist, double rating, Boolean is_trending) {
         this.name = name;

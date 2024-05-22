@@ -6,6 +6,7 @@ import javax.swing.DefaultListModel;
 import javax.swing.JList;
 import javax.swing.ListCellRenderer;
 import java.awt.Component;
+import java.sql.SQLException;
 
 public class ListProfile<E extends Object> extends JList<E> {
 
@@ -29,7 +30,11 @@ public class ListProfile<E extends Object> extends JList<E> {
                     data = new Model_Profile("Name", "Description", new javax.swing.ImageIcon(getClass().getResource("/com/raven/icon/artists_selected.png")));
                 }
                 ItemProfile item = new ItemProfile(data);
-                item.setSelected(isSelected);
+                try {
+                    item.setSelected(isSelected);
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
                 return item;
             }
         };

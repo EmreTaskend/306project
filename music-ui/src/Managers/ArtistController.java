@@ -6,6 +6,8 @@ public class ArtistController {
     public Model_Popular selectedArtist;
 
     public String selectedAlbum;
+
+    public String aName;
     private static ArtistController instance;
 
     public static ArtistController getInstance()  {

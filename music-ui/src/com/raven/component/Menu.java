@@ -34,7 +34,7 @@ public class Menu extends javax.swing.JPanel {
         Graphics2D g2 = (Graphics2D) grphcs;
         g2.setColor(getBackground());
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-        GradientPaint gp = new GradientPaint(0, 0, Color.decode("#4568dc"), 0, getHeight(), Color.decode("#b06ab3"));
+        GradientPaint gp = new GradientPaint(0, 0, Color.decode("#000000"), 0, getHeight(), Color.decode("#8B0000"));
         g2.setPaint(gp);
         g2.fillRoundRect(0, 0, getWidth(), getHeight(), 20, 20);
         g2.fillRect(getWidth() - 25, 0, getWidth(), getHeight());

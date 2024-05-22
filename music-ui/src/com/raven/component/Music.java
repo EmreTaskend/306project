@@ -17,7 +17,7 @@ public class Music extends javax.swing.JPanel {
         init();
     }
 
-    private void init() {
+    public void init() {
         // Create a JScrollPane and add the ListMusic component to it
         JScrollPane scrollPane = new JScrollPane(list);
 
@@ -52,10 +52,11 @@ public class Music extends javax.swing.JPanel {
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents() {
+    public void initComponents() {
         list = new com.raven.component.ListMusic<>();
         for(int i = 0; i < songlist.size(); i++){
             Model_Music m = new Model_Music(String.valueOf(i+1), songlist.get(i).name, String.valueOf(songlist.get(i).rating),songlist.get(i).artist,songlist.get(i).Album,songlist.get(i).is_trending);
+            m.liked = songlist.get(i).liked;
             list.addItem(m);
         }
 
@@ -91,7 +92,10 @@ public class Music extends javax.swing.JPanel {
                                 .addGap(0, 0, 0))
         );
     }
+
+
+
     private javax.swing.JLabel jLabel1;
-    private com.raven.component.ListMusic<String> list;
+    public com.raven.component.ListMusic<String> list;
 
 }

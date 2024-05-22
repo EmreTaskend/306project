@@ -1,12 +1,10 @@
 package com.raven.component;
 
 import Managers.DatabaseController;
+import Managers.ListMusicController;
 import Managers.MenuListsController;
 import com.raven.model.Model_Menu;
-import views.HighestRatedAlbumsView;
-import views.HighestRatedArtistsView;
-import views.WindowManager;
-import views.Windows;
+import views.*;
 
 import java.awt.Color;
 import java.awt.Graphics;
@@ -23,6 +21,8 @@ public class ItemMenu extends javax.swing.JPanel {
 
     private final Model_Menu data;
     private boolean selected;
+
+
 
     public void setSelected(boolean selected) throws SQLException {
         this.selected = selected;
@@ -48,6 +48,20 @@ public class ItemMenu extends javax.swing.JPanel {
                 hv.createAndShowUI();
                 MenuListsController.getInstance().list1.clearSelection();
             }
+            if(Objects.equals(data.getMenuName(), "Radio")){
+                MenuListsController.getInstance().list2.clearSelection();
+                if(!ListMusicController.getInstance().x) {
+                    ForYouView f = new ForYouView();
+                    f.createAndShowUI();
+                    ListMusicController.getInstance().x = true;
+                }
+                MenuListsController.getInstance().list2.clearSelection();
+            }
+            if(Objects.equals(data.getMenuName(), "Browse")){
+                searchView s = new searchView();
+                s.createAndShowUI();
+                MenuListsController.getInstance().list2.clearSelection();
+            }
         } else {
             lbText.setFont(new java.awt.Font("sansserif", 0, 14));
             lbText.setForeground(new Color(204, 204, 204));
@@ -61,6 +75,7 @@ public class ItemMenu extends javax.swing.JPanel {
         setOpaque(false);
         lbIcon.setIcon(data.toIcon());
         lbText.setText(data.getMenuName());
+        MenuListsController.getInstance().list2.clearSelection();
     }
 
     @SuppressWarnings("unchecked")

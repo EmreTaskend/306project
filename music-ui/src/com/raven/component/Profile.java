@@ -3,7 +3,6 @@ package com.raven.component;
 import Managers.DatabaseController;
 import Managers.ListMusicController;
 import com.raven.model.Model_Profile;
-import javax.swing.ImageIcon;
 
 public class Profile extends javax.swing.JPanel {
 

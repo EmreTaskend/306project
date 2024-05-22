@@ -1,7 +1,6 @@
 package views;
 
 import Managers.DatabaseController;
-import Managers.ListMusicController;
 import Managers.SelectSongManager;
 import com.raven.model.Model_Music;
 
@@ -16,7 +15,6 @@ public class SongView extends JFrame implements Window {
 
     private JLabel lblSongName;
     private JLabel lblArtistName;
-    private JLabel lblAlbumName;
     private JLabel lblRating;
     private JButton btnLike;
     private JButton btnAddToPlaylist;
@@ -27,23 +25,34 @@ public class SongView extends JFrame implements Window {
 
     @Override
     public void createAndShowUI() {
-        System.out.println(ListMusicController.getInstance().index);
         if (s == null) {
-            s = new Model_Music("","","","","",false);
+            s = new Model_Music("", "", "", "", "", false);
         }
         this.s = SelectSongManager.getInstance().getCur_Song();
         String songName = s.getName();
         String artistName = s.getArtist();
-        String albumName = s.getAlbum();
         String rating = s.getRating();
 
         setTitle("Song View");
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        setPreferredSize(new Dimension(450, 350)); // Set preferred size
+        setPreferredSize(new Dimension(450, 300)); // Set preferred size
         setResizable(false);
         setLocationRelativeTo(null);
 
-        JPanel contentPane = new JPanel(new BorderLayout());
+        JPanel contentPane = new JPanel(new BorderLayout()) {
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                Graphics2D g2d = (Graphics2D) g;
+                int width = getWidth();
+                int height = getHeight();
+                Color color1 = Color.BLACK;
+                Color color2 = Color.RED;
+                GradientPaint gp = new GradientPaint(0, 0, color1, width, height, color2);
+                g2d.setPaint(gp);
+                g2d.fillRect(0, 0, width, height);
+            }
+        };
         setContentPane(contentPane);
 
         // Create labels for song info with larger and bold white font
@@ -57,10 +66,6 @@ public class SongView extends JFrame implements Window {
         lblArtistName.setBorder(new EmptyBorder(20, 10, 20, 10)); // Add padding
         lblArtistName.setFont(labelFont);
         lblArtistName.setForeground(labelColor);
-        lblAlbumName = new JLabel("Album: " + albumName);
-        lblAlbumName.setBorder(new EmptyBorder(20, 10, 20, 10)); // Add padding
-        lblAlbumName.setFont(labelFont);
-        lblAlbumName.setForeground(labelColor);
         lblRating = new JLabel("Rating: " + rating + "/5");
         lblRating.setBorder(new EmptyBorder(20, 10, 20, 10)); // Add padding
         lblRating.setFont(labelFont);
@@ -73,11 +78,10 @@ public class SongView extends JFrame implements Window {
         btnAddToPlaylist.setPreferredSize(new Dimension(150, 40)); // Set button size
 
         // Add labels to the top panel
-        JPanel topPanel = new JPanel(new GridLayout(4, 1));
+        JPanel topPanel = new JPanel(new GridLayout(3, 1));
         topPanel.setOpaque(false); // Make panel transparent
         topPanel.add(lblSongName);
         topPanel.add(lblArtistName);
-        topPanel.add(lblAlbumName);
         topPanel.add(lblRating);
         contentPane.add(topPanel, BorderLayout.NORTH);
 
@@ -100,6 +104,7 @@ public class SongView extends JFrame implements Window {
             public void actionPerformed(ActionEvent e) {
                 System.out.println(s.getName());
                 DatabaseController.getInstance().insertSongToPlaylist("Liked", s.getName());
+                WindowManager.getInstance().repWindow(Windows.MainView);
                 JOptionPane.showMessageDialog(SongView.this, "Liked!");
             }
         });

@@ -1,6 +1,7 @@
 package com.raven.form;
 
 import Managers.DatabaseController;
+import Managers.ListMusicController;
 import com.raven.model.Model_Popular;
 import javax.swing.ImageIcon;
 
@@ -25,7 +26,7 @@ public class Form_Artists extends javax.swing.JPanel {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         mostPopular = new com.raven.component.MostPopular();
-        music1 = new com.raven.component.Music(DatabaseController.getInstance().fetchTrendings(),"Trending");
+        ListMusicController.getInstance().music1 = new com.raven.component.Music(DatabaseController.getInstance().fetchTrendings(),"Trending");
         profile1 = new com.raven.component.Profile();
 
         setBackground(new java.awt.Color(255, 255, 255));
@@ -49,7 +50,7 @@ public class Form_Artists extends javax.swing.JPanel {
                     .addComponent(jLabel1)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                         .addGroup(layout.createSequentialGroup()
-                            .addComponent(music1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(ListMusicController.getInstance().music1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                             .addComponent(profile1, javax.swing.GroupLayout.PREFERRED_SIZE, 353, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addComponent(mostPopular, javax.swing.GroupLayout.PREFERRED_SIZE, 950, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -66,7 +67,7 @@ public class Form_Artists extends javax.swing.JPanel {
                 .addComponent(mostPopular, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(music1, javax.swing.GroupLayout.PREFERRED_SIZE, 558, Short.MAX_VALUE)
+                    .addComponent(ListMusicController.getInstance().music1, javax.swing.GroupLayout.PREFERRED_SIZE, 558, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(profile1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE)))
@@ -78,7 +79,7 @@ public class Form_Artists extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private com.raven.component.MostPopular mostPopular;
-    private com.raven.component.Music music1;
+
     private com.raven.component.Profile profile1;
     // End of variables declaration//GEN-END:variables
 }

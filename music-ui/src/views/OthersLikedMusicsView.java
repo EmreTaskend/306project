@@ -1,8 +1,6 @@
 package views;
 
 import Managers.DatabaseController;
-import Managers.ListMusicController;
-import Managers.MenuListsController;
 import com.raven.component.Music;
 
 import javax.swing.*;
@@ -10,7 +8,7 @@ import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
-public class OtherMusicsPL extends JFrame implements Window {
+public class OthersLikedMusicsView extends JFrame implements Window {
     public Music m;
 
     @Override

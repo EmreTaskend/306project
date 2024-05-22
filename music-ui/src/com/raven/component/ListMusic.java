@@ -28,12 +28,12 @@ public class ListMusic<E extends Object> extends JList<E> {
                         playIndex = index;
                         Model_Music selectedMusic = (Model_Music) getModel().getElementAt(playIndex);
                         SelectSongManager.getInstance().setCur_Song(selectedMusic);
+                        SelectSongManager.getInstance().ind = selectedMusic.getNo();
                         try {
                             WindowManager.getInstance().showWindow(Windows.SongView);
                         } catch (SQLException e) {
                             throw new RuntimeException(e);
                         }
-                        repaint();
                     }
                 }
             }
@@ -56,4 +56,6 @@ public class ListMusic<E extends Object> extends JList<E> {
     public void addItem(Model_Music data) {
         model.addElement((E) data);
     }
+
+
 }

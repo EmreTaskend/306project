@@ -5,6 +5,10 @@ import com.raven.model.Model_Menu;
 public class MenuListsController {
     public com.raven.component.ListMenu<String> list1;
     public com.raven.component.ListMenu<String> list2;
+
+    public String owner;
+
+    public String plname;
     private static MenuListsController instance;
 
     public static MenuListsController getInstance()  {

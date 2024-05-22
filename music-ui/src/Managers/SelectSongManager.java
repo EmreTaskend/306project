@@ -6,6 +6,10 @@ public class SelectSongManager {
     private static SelectSongManager instance;
     public Model_Music cur_Song;
 
+    public String ind = "";
+
+    public String src;
+
     public static SelectSongManager getInstance()  {
         if (instance == null) {
             instance = new SelectSongManager();
