@@ -31,11 +31,6 @@ public class ItemMusic extends JPanel {
             this.play = play;
             if (play) {
                 lbIcon.setText("");
-                lbIcon.setIcon(new ImageIcon(getClass().getResource("/com/raven/icon/playing.png")));
-                lbText.setFont(new Font("sansserif", Font.BOLD, 14));
-                lbText.setForeground(new Color(203, 30, 148));
-                lbTime.setFont(new Font("sansserif", Font.BOLD, 14));
-                lbTime.setForeground(new Color(203, 30, 148));
             } else {
                 lbIcon.setIcon(null);
                 lbIcon.setText(data.getNo());

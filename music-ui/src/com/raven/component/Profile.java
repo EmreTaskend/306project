@@ -13,8 +13,10 @@ public class Profile extends javax.swing.JPanel {
 
     private void init() {
         //Model_Profile("Sigala", "Sigala", new ImageIcon(getClass().getResource("/com/raven/icon/test/sigala_pro.jpg"))));
-        for(Model_Profile m: DatabaseController.getInstance().fetchLikedLists()){
-            ListMusicController.getInstance().list.addItem(m);
+        if(DatabaseController.check) {
+            for (Model_Profile m : DatabaseController.getInstance().fetchLikedLists()) {
+                ListMusicController.getInstance().list.addItem(m);
+            }
         }
     }
 

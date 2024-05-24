@@ -16,6 +16,8 @@ public class DatabaseController {
     public static String choosedPlaylist;
     public static String choosedLikedName;
 
+    public static boolean check = true;
+
     public DatabaseController() throws SQLException {
         connection = DriverManager.getConnection(
                 "jdbc:mysql://sql11.freesqldatabase.com:3306/sql11706047",
@@ -102,7 +104,7 @@ public class DatabaseController {
                     WHERE S.name LIKE ?;
                                 
                 """)) {
-            pstmt.setString(1, src+"%");
+            pstmt.setString(1, "%"+src+"%");
             ResultSet resultSet = pstmt.executeQuery();
             ArrayList<String> liked = DatabaseController.getInstance().fetchPlaylistSongs("Liked");
             while (resultSet.next()) {
@@ -299,6 +301,24 @@ public class DatabaseController {
         }
         return playlists;
     }
+    public ArrayList<String> fetchArtists() {
+        ArrayList<String> playlists = new ArrayList<>();
+        try (PreparedStatement pstmt = connection.prepareStatement("""
+            SELECT DISTINCT artistname
+            FROM Artist A
+           
+            """)) {
+            ResultSet resultSet = pstmt.executeQuery();
+
+            while (resultSet.next()) {
+                String plname = resultSet.getString("artistname");
+                playlists.add(plname);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return playlists;
+    }
     public void createPlaylist(String plName) {
         ArrayList<String> playlists = new ArrayList<>();
         try (PreparedStatement pstmt = connection.prepareStatement("""
@@ -324,31 +344,39 @@ public class DatabaseController {
     public ArrayList<HighestRatedAlbum> fetchHighestRatedAlbums(){
         ArrayList<HighestRatedAlbum> playlists = new ArrayList<>();
         try (PreparedStatement pstmt = connection.prepareStatement("""
-                    SELECT\s
-                        a.artistname,\s
-                        a.albumname,\s
-                        AVG(s.rating) AS average_rating
-                    FROM\s
+                    SELECT
+                        a.artistname,
+                        a.albumname,
+                        AVG(s.rating) AS average_rating,
+                        ar.image -- Assuming the image column is named 'image' in the Artist table
+                    FROM
                         Album a
-                    JOIN\s
-                        Song s\s
-                    ON\s
-                        a.songname = s.name\s
+                    JOIN
+                        Song s
+                    ON
+                        a.songname = s.name
                         AND a.artistname = s.artist
-                    GROUP BY\s
-                        a.artistname,\s
-                        a.albumname
-                    ORDER BY\s
+                    JOIN
+                        Artist ar
+                    ON
+                        a.artistname = ar.artistname
+                    GROUP BY
+                        a.artistname,
+                        a.albumname,
+                        ar.image
+                    ORDER BY
                         average_rating DESC
-                    LIMIT 4; 
+                    LIMIT 4;
+                    
                 """)) {
             ResultSet resultSet = pstmt.executeQuery();
 
             while (resultSet.next()) {
                 String albumname = resultSet.getString("albumname");
                 String artistname = resultSet.getString("artistname");
+                String image = resultSet.getString("image");
                 Double rating = resultSet.getDouble("average_rating");
-                playlists.add(new HighestRatedAlbum(artistname,albumname,rating));
+                playlists.add(new HighestRatedAlbum(artistname,albumname,rating,"/"+image));
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -412,7 +440,7 @@ public class DatabaseController {
                 String pop = resultSet.getString("popularity");
                 String image = resultSet.getString("image");
                 Double rating = resultSet.getDouble("average_rating");
-                playlists.add(new Model_Popular(new ImageIcon(getClass().getResource("/"+image)),artistname,"Rating: " + rating));
+                playlists.add(new Model_Popular(new ImageIcon(getClass().getResource("/"+image)),artistname,"Rating: " + String.format("%.1f", rating)));
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -459,12 +487,13 @@ public class DatabaseController {
             while (resultSet.next()) {
                 String name = resultSet.getString("owner");
                 Double rating = resultSet.getDouble("average_rating");
-                Model_Profile a = new Model_Profile(name, "Rating: " + String.valueOf(rating),new ImageIcon(getClass().getResource("/com/raven/icon/test/LOVED.jpg")));
+                Model_Profile a = new Model_Profile(name, "Rating: " + String.format("%.1f", rating),new ImageIcon(getClass().getResource("/com/raven/icon/test/LOVED.jpg")));
                 playlists.add(a);
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+        check = false;
         return playlists;
     }
     public ArrayList<Model_Profile> fetchCompatibleAlbums(){

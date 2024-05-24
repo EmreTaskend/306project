@@ -37,8 +37,9 @@ public class MainView extends JFrame implements Window {
         bottom1 = new com.raven.component.Bottom();
 
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        setUndecorated(true);
-
+        if(!this.isDisplayable()){
+            setUndecorated(true);
+        }
         JPanel topBar = new JPanel(new BorderLayout());
         topBar.setBackground(Color.BLACK); // Set top bar color to black
         JLabel titleLabel = new JLabel("306 Music");
@@ -56,6 +57,7 @@ public class MainView extends JFrame implements Window {
             @Override
             public void actionPerformed(ActionEvent e) {
                 dispose(); // Close the window
+                System.exit(0);
             }
         });
         topBar.add(closeButton, BorderLayout.EAST);
@@ -153,8 +155,16 @@ public class MainView extends JFrame implements Window {
                         .addComponent(bottom1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
+
         this.setVisible(true);
         pack();
         setLocationRelativeTo(null);
+    }
+    public void resetUI() {
+        // Code to reset the UI components
+        getContentPane().removeAll();
+        createAndShowUI();
+        revalidate();
+        repaint();
     }
 }

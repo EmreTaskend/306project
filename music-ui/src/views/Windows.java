@@ -3,7 +3,7 @@ package views;
 import Managers.LogInController;
 
 public enum Windows{
-    MainView(new MainView()),
+    //MainView(new MainView()),
     LogIn(new LogInView(LogInController.getInstance())),
     Signup(new SignUpView()),
     Playlists(new PlaylistsView()),

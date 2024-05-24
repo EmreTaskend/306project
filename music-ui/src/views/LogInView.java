@@ -204,7 +204,9 @@ public class LogInView extends javax.swing.JFrame implements Window {
         String enteredPassword = new String(jPasswordField1.getPassword());
         try {
             if (LogInView.this.userManager.loginUser(enteredUsername, enteredPassword)) {
-                wm.showWindow(Windows.MainView);
+                MainView m = new MainView();
+                LogInController.getInstance().ma = m;
+                m.createAndShowUI();
                 this.dispose();
             } else {
                 JOptionPane.showMessageDialog(LogInView.this, "Invalid username or password.");

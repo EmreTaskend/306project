@@ -15,6 +15,7 @@ public class ChoosePlaylistView extends JFrame implements Window {
     private JButton saveButton;
     public List<String> playlists = new ArrayList<>();
 
+
     @Override
     public void createAndShowUI() {
         this.playlists = DatabaseController.getInstance().fetchUserPlaylists();
@@ -23,9 +24,13 @@ public class ChoosePlaylistView extends JFrame implements Window {
         setSize(300, 200);
         setLocationRelativeTo(null);
         setLayout(new BorderLayout());
+        setBackground(Color.BLACK);
 
         // Create and add the JComboBox
         playlistComboBox = new JComboBox<>(playlists.toArray(new String[0]));
+        playlistComboBox.setBackground(Color.WHITE); // Set background color
+        playlistComboBox.setForeground(Color.BLACK); // Set text color
+        playlistComboBox.setFont(new Font("Arial", Font.PLAIN, 14)); // Set font
         JPanel comboBoxPanel = new JPanel();
         comboBoxPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
         comboBoxPanel.add(playlistComboBox);
@@ -33,6 +38,11 @@ public class ChoosePlaylistView extends JFrame implements Window {
 
         // Create and add the save button
         saveButton = new JButton("Save");
+        saveButton.setBackground(new Color(46, 204, 113)); // Set background color
+        saveButton.setForeground(Color.BLACK); // Set text color
+        saveButton.setFocusPainted(false); // Remove focus border
+        saveButton.setFont(new Font("Arial", Font.BOLD, 14)); // Set font
+        saveButton.setPreferredSize(new Dimension(100, 40)); // Set button size
         JPanel buttonPanel = new JPanel();
         buttonPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
         buttonPanel.add(saveButton);
@@ -45,12 +55,12 @@ public class ChoosePlaylistView extends JFrame implements Window {
                 String selectedPlaylist = (String) playlistComboBox.getSelectedItem();
                 if (selectedPlaylist != null) {
                     DatabaseController.getInstance().insertSongToPlaylist((String) playlistComboBox.getSelectedItem(), SelectSongManager.getInstance().cur_Song.getName());
-                    JOptionPane.showMessageDialog(ChoosePlaylistView.this, "Saved Succesfully!");
+                    JOptionPane.showMessageDialog(ChoosePlaylistView.this, "Saved Successfully!");
                     dispose();
-
                 }
             }
         });
+
         this.setVisible(true);
     }
 

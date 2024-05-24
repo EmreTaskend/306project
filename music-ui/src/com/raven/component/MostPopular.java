@@ -1,7 +1,9 @@
 package com.raven.component;
 
 import Managers.ArtistController;
+import Managers.DatabaseController;
 import com.raven.model.Model_Popular;
+import views.AlbumSongsView;
 import views.ArtistView;
 
 import java.awt.event.MouseAdapter;
@@ -56,8 +58,16 @@ public class MostPopular extends javax.swing.JLayeredPane {
             @Override
             public void mouseClicked(MouseEvent e) {
                 ArtistController.getInstance().selectedArtist = data;
-                ArtistView artistView = new ArtistView();
-                artistView.createAndShowUI();
+                if(DatabaseController.getInstance().fetchArtists().contains(ArtistController.getInstance().selectedArtist.getTitle())) {
+                    ArtistView artistView = new ArtistView();
+                    artistView.createAndShowUI();
+                }else{
+                    ArtistController.getInstance().selectedAlbum = data.getTitle();
+                    String[] parts = data.getDescription().split("  ");
+                    ArtistController.getInstance().selectedArtist = new Model_Popular(data.getImage(),parts[0],"asd");
+                    AlbumSongsView a = new AlbumSongsView();
+                    a.createAndShowUI();
+                }
             }
         });
         panel.add(item);

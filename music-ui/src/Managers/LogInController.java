@@ -1,5 +1,9 @@
 package Managers;
 
+import views.MainView;
+import views.Window;
+
+import javax.swing.*;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -8,6 +12,9 @@ public class LogInController {
     private DatabaseController dbController;
 
     private String username;
+
+    public MainView ma;
+
 
     public static LogInController getInstance()  {
         try {

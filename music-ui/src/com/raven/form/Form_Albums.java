@@ -21,10 +21,10 @@ public class Form_Albums extends javax.swing.JPanel {
         for(int i = 0;i <hl.size();i++){
             topsongs.add(DatabaseController.getInstance().fetchTopSongOfAlbum(hl.get(i).ArtistName,hl.get(i).AlbumName));
         }
-        mostPopular.addImage(new Model_Popular(new ImageIcon(getClass().getResource("/com/raven/icon/test/kendricLamar.jpg")), hl.get(0).ArtistName + " "+String.format("%.1f", hl.get(0).rating), hl.get(0).AlbumName + " | Top Song: " + topsongs.get(0)));
-        mostPopular.addImage(new Model_Popular(new ImageIcon(getClass().getResource("/com/raven/icon/test/beyonce.jpg")), hl.get(1).ArtistName + " "+String.format("%.1f", hl.get(1).rating), hl.get(1).AlbumName + " | Top Song: " + topsongs.get(1)));
-        mostPopular.addImage(new Model_Popular(new ImageIcon(getClass().getResource("/com/raven/icon/test/taylorswift.jpg")), hl.get(2).ArtistName + " "+String.format("%.1f", hl.get(2).rating), hl.get(2).AlbumName + " | Top Song: " + topsongs.get(2)));
-        mostPopular.addImage(new Model_Popular(new ImageIcon(getClass().getResource("/com/raven/icon/test/taylorswift.jpg")), hl.get(3).ArtistName + " "+String.format("%.1f", hl.get(3).rating), hl.get(3).AlbumName + " | Top Song: " + topsongs.get(3)));
+        mostPopular.addImage(new Model_Popular(new ImageIcon(getClass().getResource(hl.get(0).Image)), hl.get(0).AlbumName, hl.get(0).ArtistName + "  Top Song: " + topsongs.get(0)));
+        mostPopular.addImage(new Model_Popular(new ImageIcon(getClass().getResource(hl.get(1).Image)), hl.get(1).AlbumName, hl.get(1).ArtistName + "  Top Song: " + topsongs.get(1)));
+        mostPopular.addImage(new Model_Popular(new ImageIcon(getClass().getResource(hl.get(2).Image)), hl.get(2).AlbumName, hl.get(2).ArtistName + "  Top Song: " + topsongs.get(2)));
+        mostPopular.addImage(new Model_Popular(new ImageIcon(getClass().getResource(hl.get(3).Image)), hl.get(3).AlbumName, hl.get(3).ArtistName + "  Top Song: " + topsongs.get(3)));
         }
 
     @SuppressWarnings("unchecked")

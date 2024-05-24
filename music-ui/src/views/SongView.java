@@ -1,7 +1,11 @@
 package views;
 
 import Managers.DatabaseController;
+import Managers.ListMusicController;
+import Managers.LogInController;
 import Managers.SelectSongManager;
+import com.raven.component.Music;
+import com.raven.form.Form_Artists;
 import com.raven.model.Model_Music;
 
 import javax.swing.*;
@@ -104,7 +108,7 @@ public class SongView extends JFrame implements Window {
             public void actionPerformed(ActionEvent e) {
                 System.out.println(s.getName());
                 DatabaseController.getInstance().insertSongToPlaylist("Liked", s.getName());
-                WindowManager.getInstance().repWindow(Windows.MainView);
+                LogInController.getInstance().ma.resetUI();
                 JOptionPane.showMessageDialog(SongView.this, "Liked!");
             }
         });
